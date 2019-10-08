@@ -710,5 +710,5 @@ func resourceServerUpdate(d *schema.ResourceData, meta interface{}) error {
 func resourceServerDelete(d *schema.ResourceData, meta interface{}) error {
 	h := buildHostStruct(d, meta)
 	client := meta.(*ForemanClient).foremanconn
-	return client.DeleteHost(h.Name)
+	return client.DeleteHost(&h)
 }
