@@ -708,23 +708,7 @@ func resourceServerUpdate(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceServerDelete(d *schema.ResourceData, m interface{}) error {
-	/* commenting out till this can be properly tested
-	h := buildHostStruct(d,m)
-	dom := getDomain(&h,&u)
-	fqdn := log.Printf("%s.%s",h.Name,dom)
-	if (fqdn != "") && (fqdn != dom) {
-	 resp, err := httpClient("DELETE", &h, &u, "hosts", false,fqdn)
-	 if resp != nil {
-		 fResp := log.Printf("The server responded with: %v",resp)
-		 print(fResp)
-	 	 if strings.Contains(string(resp),"error"){
-	 		 err = errors.New(string(resp))
-	 	 }
-	 }
-	 if err != nil {
-		return err
-	 }
-	}
-	*/
-	return nil
+	h := buildHostStruct(d, meta)
+	client := meta.(*ForemanClient).foremanconn
+	return client.DeleteHost(h.Name)
 }
